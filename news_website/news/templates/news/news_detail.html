@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ news_item.title }}</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="news-container">
+        <h2>{{ news_item.title }}</h2>
+        <p>{{ news_item.content }}</p>
+        <small>Published by {{ news_item.admin }} on {{ news_item.published_date }}</small>
+        
+        <div>
+            <p>Likes: {{ news_item.like_count }} | Comments: {{ news_item.comment_count }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="like">Like</button>
+            </form>
+        </div>
+
+        <h3>Comments</h3>
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <strong>{{ comment.user.username }}</strong>: {{ comment.content }} ({{ comment.created_at }})
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h4>Add a Comment</h4>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="comment_content" rows="4" placeholder="Write your comment..."></textarea>
+            <button type="submit" name="comment">Submit Comment</button>
+        </form>
+    </div>
+</body>
+</html>
